@@ -14,7 +14,7 @@ app.use(bodyParser.json()); // Parse incoming JSON requests
 app.use(bodyParser.urlencoded({ extended: true })); // Parse incoming URL-encoded data
 
 // Connect to MongoDB
-const uri = "mongodb+srv://<username>:<password>@cluster.mongodb.net/<database>?retryWrites=true&w=majority"; // Replace with your connection string
+const uri = ""; // Replace with  connection string
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
