@@ -31,13 +31,14 @@ exports.transferFunds = async (req, res) => {
     }
 };
 exports.transactions = async (req, res) => {
-    const { upi } = (req.params);
+    
   
     try {
+      const { upi } = (req.params);
         const transaction = await Transaction.find({
             $or: [
-              { senderUpiId: senderUpiId },
-              { receiverUpiId: senderUpiId }
+              { senderUpiId: upi },
+              { receiverUpiId: upi }
             ]
           });
   

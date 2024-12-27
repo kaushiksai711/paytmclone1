@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 
 const Dashboard = () => {
     const { upi } = useParams();
+    console.log(upi)
   const [user, setUser] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ const Dashboard = () => {
             method: 'GET',
           });
         const data = await response.json();
+        console.log(data,'asadadsa')
         setUser(data.user);
         
       } catch (err) {
@@ -49,8 +51,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
+        {console.log(user)}
         <h1>Welcome, {user?.name || "User"}!</h1>
-        <p>Your wallet is safe and secure</p>
+        <p>safe and secure wallet</p>
       </header>
       <div className="dashboard-body">
         <div className="wallet-section">
@@ -91,7 +94,7 @@ const Dashboard = () => {
                 transaction.senderUpiId !== upi ? "credit" : "debit"
               }`}
             >
-              {transaction.type === "credit" ? "+" : "-"}₹
+              {transaction.senderUpiId !== upi ? "+" : "-"}₹
               {transaction.amount.toLocaleString("en-IN")}
             </td>
           </tr>

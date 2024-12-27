@@ -33,13 +33,14 @@ exports.login = async (req, res) => {
     }
 };
 exports.details=async (req, res) => {
-    console.log(req)
-    console.log(upi)
     
     try {
         
-        const { upi } = req.params;
-        const user = await User.findOne({upi});
+        const { upi } = (req.params);
+        const user = await User.findOne({upiId:upi});
+        
+    console.log(req)
+    console.log(upi)
         if (user) {
             res.status(200).json({ user });
         } 
