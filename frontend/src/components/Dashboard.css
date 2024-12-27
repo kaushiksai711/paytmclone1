@@ -1,0 +1,145 @@
+/* Dashboard styling */
+
+.dashboard-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9fafb;
+    color: #333;
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #0077e6;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-header h1 {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .dashboard-header p {
+    margin: 5px 0 0 0;
+    font-size: 1rem;
+  }
+  
+  .dashboard-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+  }
+  
+  .wallet-section,
+  .actions-section,
+  .transactions-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wallet-section h2,
+  .actions-section h2,
+  .transactions-section h2 {
+    margin-bottom: 10px;
+    color: #0077e6;
+  }
+  
+  .wallet-balance {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    background-color: #f1f5f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .actions-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .action-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #0077e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .action-button:hover {
+    background-color: #005bb5;
+  }
+  
+  /* Transaction table styling */
+  .transactions-table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .transactions-table th, .transactions-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .transactions-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .transactions-table td {
+    max-width: 180px; /* Prevents UPI IDs from spilling */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .transaction-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .transaction-amount {
+    text-align: right;
+    font-weight: bold;
+  }
+  
+  .transaction-amount.credit {
+    color: green;
+  }
+  
+  .transaction-amount.debit {
+    color: red;
+  }
+  
+  /* Added responsive style for better mobile support */
+  @media screen and (max-width: 768px) {
+    .dashboard-body {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .wallet-section,
+    .actions-section,
+    .transactions-section {
+      max-width: 100%;
+    }
+    
+    .transactions-table th, .transactions-table td {
+      font-size: 0.8rem;
+      padding: 10px;
+    }
+  }
