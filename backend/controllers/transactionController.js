@@ -42,7 +42,7 @@ exports.transactions = async (req, res) => {
             ]
           });
   
-      res.status(200).json({transaction });
+      res.status(200).json(transaction );
     } catch (error) {
       res.status(500).json({ message: 'Transaction failed', error: error.message });
     }

@@ -1,6 +1,9 @@
 
 const User = require("../models/User");
 const crypto = require("crypto");
+const mongoose = require('mongoose');
+
+// Convert the id parameter to ObjectId
 
 // Helper function to generate unique UPI IDs
 const generateUPI = () => crypto.randomBytes(8).toString("hex") + "@paytmclone";
@@ -33,14 +36,20 @@ exports.login = async (req, res) => {
     }
 };
 exports.details=async (req, res) => {
-    
+    const { id } = (req.params);
+        //example id :'6769b91294d30fdadae3bf7e'
+        const objectId = new mongoose.Types.ObjectId(id);
+        console.log(objectId)
     try {
-        
-        const { upi } = (req.params);
-        const user = await User.findOne({upiId:upi});
+        /*trying with object id _id  */
+        const { id } = (req.params);
+        //example id :'6769b91294d30fdadae3bf7e'
+        const objectId = new mongoose.Types.ObjectId(id);
+        console.log(objectId)
+        const user = await User.findById(objectId);
+        console.log(user)
         
     console.log(req)
-    console.log(upi)
         if (user) {
             res.status(200).json({ user });
         } 

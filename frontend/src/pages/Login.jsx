@@ -10,7 +10,7 @@ const Login = () => {
   const handleLogin = (userData) => {
     setUser(userData.user);
     console.log(userData)
-    navigate(`/${userData.user.upiId}/dashboard`); /// Redirect to username's dashboard
+    navigate(`/${userData.user._id}/dashboard`); /// Redirect to username's dashboard
   };
 
   return (
