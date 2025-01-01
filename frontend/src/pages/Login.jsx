@@ -14,20 +14,12 @@ const Login = () => {
   };
 
   return (
-    <div className="login-page">
-      {user ? (
-        <div className="welcome-section">
-          <h1>Welcome Back, {user.name || 'User'}!</h1>
-          <p>You will be redirected to your dashboard shortly.</p>
-        </div>
-      ) : (
-        <div className="form-container">
-          <h2>Login to Your Account</h2>
+    <div>
           <LoginForm onLogin={handleLogin} />
         </div>
-      )}
-    </div>
   );
 };
 
 export default Login;
+
+

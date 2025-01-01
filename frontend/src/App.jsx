@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Transaction from './pages/Transaction';
 import Dashboard from './components/Dashboard';
-
+import './App.css'
 const App = () => {
   return (
     <Router>

@@ -60,3 +60,18 @@ exports.details=async (req, res) => {
         res.status(500).json( 'error' );
     }
   };
+  exports.alldetails=async (req, res) => {
+    try {
+        const user = await User.find({}, { name: 1, upiId: 1, _id: 0 });
+        
+    console.log(req)
+        if (user) {
+            res.status(200).json({ user });
+        } 
+        else{
+            res.status(404).json({ error: "User not found" });
+            }
+    } catch (error) {
+        res.status(500).json( 'error' );
+    }
+  };
