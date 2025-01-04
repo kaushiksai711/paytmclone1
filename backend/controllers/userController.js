@@ -140,17 +140,15 @@ exports.verifyOTP = (req, res) => {
 
     return res.status(400).json({ message: 'Invalid OTP.' });
 };
-const PLAID_CLIENT_ID = "6777eb8d243d7400200ba1c1";
-const PLAID_SECRET = "c674e95082a726e528ee4b624e2ae7";
-const PLAID_ENV = "sandbox"; // Change to "development" or "production" as needed
+ // Change to "development" or "production" as needed
 
 exports.createLinkToken = async (req, res) => {
   try {
     const response = await axios.post(
-      `https://${PLAID_ENV}.plaid.com/link/token/create`,
+      `https://${process.env.PLAID_ENV}.plaid.com/link/token/create`,
       {
-        client_id: PLAID_CLIENT_ID,
-        secret: PLAID_SECRET,
+        client_id: process.env.PLAID_CLIENT_ID,
+        secret: process.env.PLAID_SECRET,
         user: {
           client_user_id: "user-id-123", // Replace with an actual user identifier
         },
