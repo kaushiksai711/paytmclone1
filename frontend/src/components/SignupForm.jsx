@@ -12,7 +12,7 @@ const SignupForm = () => {
       const response = await fetch('http://localhost:5000/api/users/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email,phone, password }),
       });
       const data = await response.json();
       if (response.ok) {
@@ -64,7 +64,20 @@ const SignupForm = () => {
               required
             />
           </div>
-          
+          <div>
+            <label htmlFor="Phone" className="block text-sm text-blue-300 mb-2">
+              Phone
+            </label>
+            <input
+              type="string"
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full p-3 bg-blue-500/10 rounded-lg backdrop-blur-sm border border-blue-500/20 focus:outline-none focus:border-blue-500/50"
+              placeholder="Enter your Phone"
+              required
+            />
+          </div>
           <div>
             <label htmlFor="password" className="block text-sm text-blue-300 mb-2">
               Password

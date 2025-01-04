@@ -164,7 +164,7 @@ const Dashboard = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: <Download />, label: 'Add Money', path: '/add-money' },
+              { icon: <Download />, label: 'Add Money', path: '/add' },
               { icon: <SendHorizontal />, label: 'Pay' , path: '/transaction'},
               { icon: <Upload />, label: 'Request' , path: '/Request'},
               { icon: <CreditCard />, label: 'Send to Bank', path: '/Send' }

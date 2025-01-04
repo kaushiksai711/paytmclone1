@@ -2,18 +2,19 @@
 const User = require("../models/User");
 const crypto = require("crypto");
 const mongoose = require('mongoose');
-
+const nodemailer = require('nodemailer');
 // Convert the id parameter to ObjectId
+const axios = require("axios");
 
 // Helper function to generate unique UPI IDs
 const generateUPI = () => crypto.randomBytes(8).toString("hex") + "@paytmclone";
 
 exports.signup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email,phone, password } = req.body;
     const upiId = generateUPI();
 
     try {
-        const newUser = new User({ name, email, password, upiId, balance: 1000 });
+        const newUser = new User({ name, email, password, upiId, balance: 0,phoneno:phone });
         await newUser.save();
         res.status(201).json({ message: "User created successfully", upiId });
     } catch (error) {
@@ -22,10 +23,10 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email,phone, password } = req.body;
 
     try {
-        const user = await User.findOne({ email, password });
+        const user = await User.findOne({ email, password ,phone});
         if (user) {
             res.status(200).json({ message: "Login successful", user });
         } else {
@@ -75,3 +76,94 @@ exports.details=async (req, res) => {
         res.status(500).json( 'error' );
     }
   };
+// Temporary in-memory OTP store (replace with Redis/DB in production)
+const otpStore = {};
+
+// Controller to send OTP
+exports.sendOTP = async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    // Generate a 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999);
+    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // Valid for 5 minutes
+
+    // Configure nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // Use TLS
+        auth: {
+            user: process.env.SMTP_EMAIL, // Your email
+            pass: process.env.SMTP_PASSWORD, // App-specific password
+        },
+    });
+
+    // Send the OTP
+    try {
+        await transporter.sendMail({
+            from: process.env.SMTP_EMAIL,
+            to: email,
+            subject: 'Your OTP Code',
+            text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
+        });
+
+        return res.status(200).json({ message: 'OTP sent to your email.' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ message: 'Failed to send OTP.' });
+    }
+};
+
+// Controller to verify OTP
+exports.verifyOTP = (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!otpStore[email]) {
+        return res.status(400).json({ message: 'OTP not requested or expired.' });
+    }
+
+    const { otp: storedOtp, expiresAt } = otpStore[email];
+
+    if (Date.now() > expiresAt) {
+        delete otpStore[email]; // Remove expired OTP
+        return res.status(400).json({ message: 'OTP has expired.' });
+    }
+
+    if (parseInt(otp) === storedOtp) {
+        delete otpStore[email]; // OTP is used and no longer needed
+        return res.status(200).json({ message: 'OTP verified successfully!' });
+    }
+
+    return res.status(400).json({ message: 'Invalid OTP.' });
+};
+const PLAID_CLIENT_ID = "6777eb8d243d7400200ba1c1";
+const PLAID_SECRET = "c674e95082a726e528ee4b624e2ae7";
+const PLAID_ENV = "sandbox"; // Change to "development" or "production" as needed
+
+exports.createLinkToken = async (req, res) => {
+  try {
+    const response = await axios.post(
+      `https://${PLAID_ENV}.plaid.com/link/token/create`,
+      {
+        client_id: PLAID_CLIENT_ID,
+        secret: PLAID_SECRET,
+        user: {
+          client_user_id: "user-id-123", // Replace with an actual user identifier
+        },
+        client_name: "Your App Name",
+        products: ["auth", "transactions"],
+        country_codes: ["US"],
+        language: "en",
+      }
+    );
+
+    res.status(200).json({ link_token: response.data.link_token });
+  } catch (error) {
+    console.error("Error creating Plaid link token:", error);
+    res.status(500).json({ error: "Failed to create Plaid link token" });
+  }
+};
