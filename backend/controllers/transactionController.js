@@ -2,7 +2,7 @@ const Transaction = require('../models/Transaction');
 const User = require('../models/User');
 
 exports.transferFunds = async (req, res) => {
-    const { senderUpiId, receiverUpiId, amount } = req.body;
+    const { senderUpiId, receiverUpiId, amount,category,notes } = req.body;
 
     try {
         const sender = await User.findOne({ upiId: senderUpiId});
@@ -22,7 +22,7 @@ exports.transferFunds = async (req, res) => {
         await sender.save();
         await receiver.save();
 
-        const transaction = new Transaction({ senderUpiId, receiverUpiId, amount:amount });
+        const transaction = new Transaction({ senderUpiId, receiverUpiId, amount:amount ,category:category,notes:notes});
         await transaction.save();
 
         res.status(200).json({ message: "Transaction successful" });

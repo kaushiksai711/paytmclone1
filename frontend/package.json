@@ -18,6 +18,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.469.0",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
@@ -25,6 +26,7 @@
     "react-plaid": "^0.13.0",
     "react-plaid-link": "^3.6.1",
     "react-router-dom": "^7.1.0",
+    "react-toastify": "^11.0.2",
     "recharts": "^2.15.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.17"

@@ -5,6 +5,8 @@ const transactionSchema = new mongoose.Schema({
     receiverUpiId: { type: String, required: true },
     amount: { type: Number, required: true },
     timestamp: { type: Date, default: Date.now },
+    notes: String,
+    category: String,
 });
 
 module.exports = mongoose.model("Transaction", transactionSchema);

@@ -94,19 +94,6 @@ const AddMoneyPage = () => {
             marginTop: "10px",
           }}
         >
-          <button
-            onClick={()=>navigate(`/${user._id}/dashboard`)}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Return to Dashboard
-          </button>
         </div>
       </div>
     );
